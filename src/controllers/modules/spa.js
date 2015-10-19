@@ -1,9 +1,7 @@
-var path = require('path');
-var views = require('co-views');
-var render= views(path.join(__dirname, '../../views'), { map: { html: 'swig' }});
-
 module.exports = function(router){
+    require('../../app/routes-spa')(router);
+
     router.get('/', function *(){
-        this.response.body = yield render('index');
+        yield this.render('index');
     });
 };
