@@ -345,6 +345,7 @@ var nest = {
     },
 
     viewable: function(options){
+        debugger;
         var view = util.extend({}, options);
 
         view.init = function(ctx){

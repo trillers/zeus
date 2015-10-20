@@ -48,6 +48,21 @@ function formatDate(date) {
     return (myyear + "-" + mymonth + "-" + myweekday);
 }
 
+//格局化日期：yyyy年MM月dd日
+function formatChineseDate(date) {
+    var myyear = date.getFullYear();
+    var mymonth = date.getMonth() + 1;
+    var myweekday = date.getDate();
+
+    if (mymonth < 10) {
+        mymonth = "0" + mymonth;
+    }
+    if (myweekday < 10) {
+        myweekday = "0" + myweekday;
+    }
+    return (myyear + "年" + mymonth + "月" + myweekday + '日');
+}
+
 //获得某月的天数
 function getMonthDays(myMonth){
     var monthStartDate = new Date(nowYear, myMonth, 1);
@@ -462,6 +477,24 @@ var util = {
 
     replaceImgTemplate:function(template){
         return template.replace(/\%\%(.*?)\%\%/g,'<img filename="$1" src="http://7u2kxz.com2.z0.glb.qiniucdn.com/$1">');
+    },
+
+    formatChineseDate:function(date){
+        return formatChineseDate(date);
+    },
+    //获得所给日期的开始日期
+    getDateStartTime: function (date) {
+        return formatDate(date) + startHHMMSS;
+    },
+    //获得所给日期的结束日期
+    getDateEndTime: function (date) {
+        return formatDate(date) + endHHMMSS;
+    },
+    //获得加上给定天数的日期
+    getAddedDaysTime: function(date, i){
+        var day = date.getDate();
+        day = day + i;
+        return new Date(date.setDate(day));
     },
     //获得最近三天的开始日期
     getLastDayStartDate: function () {

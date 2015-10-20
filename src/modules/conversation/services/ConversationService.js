@@ -1,6 +1,7 @@
 var logger = require('../../../app/logging').logger;
 var ConversationState = require('../../common/models/TypeRegistry').item('ConversationState');
 var u = require('../../../app/util');
+var User = require('../../user/models/User').model;
 var Conversation = require('../models/Conversation').model;
 var Promise = require('bluebird');
 var kvs = require('../kvs/Conversation');
@@ -107,7 +108,11 @@ Service.find = function (params, callback) {
         query.find(params.conditions);
     }
 
-
+    if (params.populate) {
+        params.populate.forEach(function(item){
+            query.populate(item);
+        })
+    }
     //TODO: specify select list, exclude comments in list view
     query.lean(true);
     query.exec(function (err, docs) {
@@ -140,6 +145,12 @@ Service.filter = function (params, callback) {
 
     if (params.conditions) {
         query.find(params.conditions);
+    }
+
+    if (params.populate) {
+        params.populate.forEach(function(item){
+            query.populate(item);
+        })
     }
     query.lean(true);
     query.exec(function (err, docs) {
@@ -184,6 +195,15 @@ Service.close = function(cvs, callback){
         })
     })
 };
+
+Service.getFilterDocCount = function(filter, callback){
+    Conversation.count(filter, function(err, count){
+        if(err){
+            if(callback) return callback(err, null);
+        }
+        if(callback) return callback(null, count);
+    });
+}
 
 Service.getTodayCvsSum = function(callback){
     var startTime = new Date();

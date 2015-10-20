@@ -21,6 +21,78 @@ app.routeView('cvs/index', nest.viewable({
   }
 }));
 
+app.routeView('cvs/query', nest.viewable({
+  name: 'cvs/query',
+  mount: function(ctx){
+    var tags = riot.mount('cvs-query', {filter: ctx.req.query, app: this.parent});
+    this.tag = tags[0];
+  },
+  route: function(ctx){
+    this.context = ctx;
+    this.tag.trigger('open', ctx.req.query);
+  }
+}));
+
+app.routeView('cvs/_:id', nest.viewable({
+  name: 'cvs/_:id',
+  mount: function(ctx){
+    var tags = riot.mount('cvs-messages', {_id: ctx.req.params.id, app: this.parent});
+    this.tag = tags[0];
+  },
+  route: function(ctx){
+    this.context = ctx;
+    this.tag.trigger('open', {id: ctx.req.params.id, share: ctx.req.query.share, guest: ctx.req.query.guest});
+  }
+}));
+
+app.routeView('cs/index', nest.viewable({
+  name: 'cs/index',
+  mount: function(ctx){
+    var tags = riot.mount('cs-index', {filter: ctx.req.query, app: this.parent});
+    this.tag = tags[0];
+  },
+  route: function(ctx){
+    this.context = ctx;
+    this.tag.trigger('open', ctx.req.query);
+  }
+}));
+
+app.routeView('cs/query', nest.viewable({
+  name: 'cs/query',
+  mount: function(ctx){
+    var tags = riot.mount('cs-query', {filter: ctx.req.query, app: this.parent});
+    this.tag = tags[0];
+  },
+  route: function(ctx){
+    this.context = ctx;
+    this.tag.trigger('open', ctx.req.query);
+  }
+}));
+
+app.routeView('customer/index', nest.viewable({
+  name: 'customer/index',
+  mount: function(ctx){
+    var tags = riot.mount('customer-index', {filter: ctx.req.query, app: this.parent});
+    this.tag = tags[0];
+  },
+  route: function(ctx){
+    this.context = ctx;
+    this.tag.trigger('open', ctx.req.query);
+  }
+}));
+
+app.routeView('customer/query', nest.viewable({
+  name: 'customer/query',
+  mount: function(ctx){
+    var tags = riot.mount('customer-query', {filter: ctx.req.query, app: this.parent});
+    this.tag = tags[0];
+  },
+  route: function(ctx){
+    this.context = ctx;
+    this.tag.trigger('open', ctx.req.query);
+  }
+}));
+
 app.on('init', function(){
   var attentionUrl = util.getCookie('attentionUrl');
   var hash = attentionUrl || window.location.hash;

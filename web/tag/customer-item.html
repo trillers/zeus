@@ -1,0 +1,18 @@
+<customer-item>
+    <li style="width: 100%">
+        <span class="col-md-1"> </span>
+        <span class="col-md-2"> <img src="{headUrl}"  style="max-width: 2em"></span>
+        <span class="col-md-2"> {nickname}</span>
+        <span class="col-md-2"> 空</span>
+        <span class="col-md-2"> 空</span>
+        <span class="col-md-2"> 未验证 </span>
+    </li>
+    <br>
+    <br>
+    <script>
+        var self = this;
+        var item = self.opts.curritem;
+        self.headUrl = item.wx_headimgurl;
+        self.nickname = item.wx_nickname.length < 6 ? item.wx_nickname : item.wx_nickname.slice(0, 5) + '...';
+    </script>
+</customer-item>

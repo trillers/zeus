@@ -6,6 +6,7 @@ var logging = require('./logging');
 var logger = require('./logging').logger;
 var path = require('path');
 var settings = require('zeus-settings');
+var koaBody = require('koa-body');
 //var render= views(path.join(__dirname, '../views'), { map: { html: 'swig' }});
 app.env = 'development' || settings.env.NODE_ENV;
 app['port'] =  process.env.PORT || settings.env.PORT;//TODO: configure it by settings
@@ -18,6 +19,8 @@ var system = require('./system');
 system.addMember('application', app);
 
 app.use(views(path.join(__dirname, '../views'), { map: { html: 'swig' }}));
+app.use(koaBody({multipart:true, formidable:{keepExtensions: true, uploadDir: path.join(__dirname, '../../public')}}));
+
 app.use(logging.generatorFunc);
 //router
 require('../routes')(app);

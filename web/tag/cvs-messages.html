@@ -1,0 +1,86 @@
+<cvs-detail>
+    <div if="{!hidden}">
+        <top-menu></top-menu>
+        <div class="container">
+            <div class="row-fluid">
+                <div class="col-md-3 col-xs-3 col-sm-3" >
+                    <div class="well sidebar-nav" style="height: 38em">
+                        <ul class="nav nav-list" style="margin-top: 1em">
+                            <li class="leftlist"><a href="#cvs/index">会话总览</a></li>
+                            <li class="leftlist"><a href="#cvs/query">会话查询</a></li>
+                        </ul>
+                    </div><!--/.well -->
+                </div><!--/span-->
+                <div class="col-md-9 col-xs-9 col-sm-9">
+                    <div class="jumbotron" style="height: 38em">
+                        <div class="col-md-12" >
+                            <div class="panel panel-default" style="height: 32em">
+                                <div style="height: 29em;">
+                                    <ul>
+                                        <li each='{items}' style="float: left; width: 100%">
+                                            <br>
+                                            <small>{'('+ new Date(crtOn).getHours() + ':' + new Date(crtOn).getMinutes()}</small>
+                                            <strong>{}：</strong>
+                                            <br> &nbsp;&nbsp;&nbsp;&nbsp;{content || recognition} </li>
+                                    </ul>
+                                </div>
+                                <hr style="margin-top: 0em ; margin-bottom: 0em ">
+                                <a style="float: left ; margin-left: 1em ;font-size: 1.5em" onclick="{returnPage}">返回</a>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/span-->;
+            </div><!--/row-->
+
+
+        </div><!--/container-->
+
+        <style type="text/css">
+            .leftlist{list-style-type: none;text-align: center;font-size: 1.3em}
+        </style>
+        <script>
+            this.app = this.opts.app; //keep spa object
+            var self = nest.presentable(this);
+            self.env = (__app.settings.env.NODE_ENV=="production")?"public":"web";
+            self.cvsId = this.opts._id;
+            var loadMsgOfCvs = domain.action('loadMsgOfCvs');
+
+            var onLoadMsgOfCvs = function(data){
+                self.item = data;
+                self.update();
+            }
+            this.on('mount', function(){
+                console.info('tag cvs messages is mounted');
+                loadMsgOfCvs.onDone(onLoadMsgOfCvs);
+            });
+            this.on('unmount', function(){
+                console.info('tag cvs messages is unmounted');
+                loadMsgOfCvs.offDone(onLoadMsgOfCvs);
+            });
+            this.on('open', function(options){
+                console.info('tag cvs messages is opening');
+                self.trigger('ready', true);
+                self.trigger('view-route-to');
+            });
+
+            this.on('leave', function(){
+                self.mask = true;
+                self.update();
+            });
+
+            this.on('reenter', function(){
+                self.mask = false;
+                self.update();
+            });
+
+            this.on('refresh', function(){
+                console.info('tag cvs index is refreshing');
+                //_refresh();
+            });
+
+            returnPage(e){
+                riot.route('cvs/query');
+            }
+        </script>
+    </div>
+</cvs-detail>

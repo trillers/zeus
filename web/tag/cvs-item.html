@@ -1,0 +1,22 @@
+<cvs-item>
+    <li>
+        <span class="col-md-2">{customer}</span>
+        <span class="col-md-2">{cs}</span>
+        <span class="col-md-2">{date}</span>
+        <span class="col-md-2">{time}</span>
+        <span class="col-md-2">5s</span>
+        <a class="col-md-2" onclick="{showMessages}">查看</a>
+    </li>
+    <script>
+        var self = this;
+        var item = self.opts.curritem;
+        self.customer = item.initiator.wx_nickname;
+        self.cs = item.csId.wx_nickname;
+        var createTime = new Date(item.createTime);
+        self.date = createTime.toLocaleDateString().replace(/\//g, '-');
+        self.time = createTime.getHours() + ':' + createTime.getMinutes();
+        showMessages(e){
+            riot.route('cvs/_' + item._id);
+        }
+    </script>
+</cvs-item>

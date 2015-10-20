@@ -1,15 +1,6 @@
 <cvs-index>
-    <nav class="navbar navbar-default navbar-inverse" role="navigation">
-        <div class="collapse navbar-collapse">
-            <a class="navbar-brand" style="font-size: 2em;color: white">微信后台</a>
-            <ul class="nav navbar-nav">
-                <li class="navbtn"><a href="＃cvs/index" style="font-size: 1.5em">会话</a></li>
-                <li class="navbtn"><a href="#cs/index" style="font-size: 1.5em">客服</a></li>
-                <li class="navbtn"><a href="#customer/index" style="font-size: 1.5em">客户</a></li>
-            </ul>
-        </div>
-    </nav>
-
+    <div if="{!hidden}">
+    <top-menu></top-menu>
     <div class="container">
         <div class="row-fluid">
             <div class="col-md-3 col-xs-3 col-sm-3" >
@@ -51,7 +42,6 @@
 
     </div><!--/container-->
     <style type="text/css">
-        .navbtn{padding-left: 18em}
         .leftlist{list-style-type: none;text-align: center;font-size: 1.3em}
         .numberlist{list-style-type: none ; text-align: center}
     </style>
@@ -61,7 +51,7 @@
         self.env = (__app.settings.env.NODE_ENV=="production")?"public":"web";
         var getCvsSnapshot = domain.action('getCvsSnapshot');
         var onGetCvsSnapshot = function(data){
-            self.today = new Date().toLocaleDateString();
+            self.today = util.formatChineseDate(new Date());
             self.update(data);
         }
         this.on('mount', function(){
@@ -74,10 +64,9 @@
         });
         this.on('open', function(options){
             console.info('tag cvs index is opening');
-//            self.trigger('ready', false);
-//            self.trigger('view-route-to');
-            debugger;
-            getCvsSnapshot.execute({});
+            self.trigger('ready', false);
+            self.trigger('view-route-to');
+            getCvsSnapshot.execute();
         });
 
         this.on('leave', function(){
@@ -103,4 +92,5 @@
 
         });
     </script>
+    </div>
 </cvs-index>

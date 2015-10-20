@@ -1,0 +1,136 @@
+<cvs-query>
+    <div if="{!hidden}">
+    <top-menu></top-menu>
+    <div class="container">
+        <div class="row-fluid">
+            <div class="col-md-3 col-xs-3 col-sm-3" >
+                <div class="well sidebar-nav" style="height: 38em">
+                    <ul class="nav nav-list" style="margin-top: 1em">
+                        <li class="leftlist"><a href="#cvs/index">会话总览</a></li>
+                        <li class="leftlist"><a href="#cvs/query">会话查询</a></li>
+                    </ul>
+                </div><!--/.well -->
+            </div><!--/span-->
+            <div class="col-md-9 col-xs-9 col-sm-9">
+                <div class="jumbotron" style="height: 38em;padding-top: 0em; padding-left: 2em;padding-right: 4em;">
+                    <br>
+                    <div>
+                        <ul>
+                            <li class="numberlist">
+                                <p>
+                                    <span style="font-size: 1em">日期：</span> <!-- 默认今天 -->
+                                    <span style="font-size: 0.5em">{date}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span style="font-size: 0.5em" onclick="{preDay}">前一天</span>&nbsp;&nbsp;
+                                    <span style="font-size: 0.5em" onclick="{nextDay}">后一天</span>&nbsp;&nbsp;
+                                    <span style="font-size: 0.5em" onclick="{total}">全部</span>
+                                </p>
+                            </li >
+
+                            <li class="numberlist">
+                                <div class="panel " style="height: 30em">
+                                    <ul class="numberlist">
+
+                                        <li>
+                                            <strong class="col-md-2"> 客户</strong>
+                                            <strong class="col-md-2"> 客服</strong>
+                                            <strong class="col-md-2"> 日期</strong>
+                                            <strong class="col-md-2"> 时间</strong>
+                                            <strong class="col-md-2"> 响应时间</strong>
+                                            <strong class="col-md-2"> 会话记录</strong>
+                                        </li>
+
+
+                                        <li>  <hr width="110%" style="margin-left: -3em">  </li>
+                                        <cvs-item each={items} curritem="{this}" />
+
+                                    </ul>
+                                </div><!-- panel-->
+                            </li>
+
+                        </ul>
+                    </div> <!--  ul -->
+                </div><!--  jumbotron -->
+            </div><!--/span-->
+        </div><!--/row-->
+
+
+    </div><!--/container-->
+    <style type="text/css">
+        .leftlist{list-style-type: none;text-align: center;font-size: 1.3em}
+        .numberlist{list-style-type: none ; text-align: center}
+    </style>
+    <script>
+        this.app = this.opts.app; //keep spa object
+        var self = nest.presentable(this);
+        self.env = (__app.settings.env.NODE_ENV=="production")?"public":"web";
+        var date = new Date();
+        var params = {
+            conditions: {
+                createTime: {$gt: util.getDateStartTime(date), $lt: util.getDateEndTime(date)}
+            }
+        };
+        var loadCvs = domain.action('loadCvs');
+        var onLoadCvs = function(data){
+            if(data) {
+                self.date = util.formatChineseDate(date);
+                self.items = data;
+                self.update();
+            }
+        }
+
+        this.on('mount', function(){
+            console.info('tag cvs index is mounted');
+            loadCvs.onDone(onLoadCvs);
+        });
+        this.on('unmount', function(){
+            console.info('tag cvs index is unmounted');
+            loadCvs.offDone(onLoadCvs);
+        });
+        this.on('open', function(options){
+            console.info('tag cvs query is opening');
+            self.trigger('ready', false);
+            self.trigger('view-route-to');
+            loadCvs.execute(params);
+        });
+
+        this.on('leave', function(){
+            self.mask = true;
+            self.update();
+        });
+
+        this.on('reenter', function(){
+            self.mask = false;
+            self.update();
+        });
+
+        this.on('refresh', function(){
+            console.info('tag cvs index is refreshing');
+            //_refresh();
+        });
+
+        this.on('show', function(cmd){
+            if(cmd){
+                __page.holder().setTitle('会话');
+            }
+            $(window).scrollTop(__page.holder().getTop());
+
+        });
+
+        preDay(e){
+            date = util.getAddedDaysTime(date, -1);
+            params.conditions.createTime['$gt'] = util.getDateStartTime(date);
+            params.conditions.createTime['$lt']= util.getDateEndTime(date);
+            loadCvs.execute(params);
+        }
+        nextDay(e){
+            date = util.getAddedDaysTime(date, 1);
+            params.conditions.createTime['$gt'] = util.getDateStartTime(date);
+            params.conditions.createTime['$lt']= util.getDateEndTime(date);
+            loadCvs.execute(params);
+        }
+        total(e){
+            loadCvs.execute();
+        }
+    </script>
+        </div>
+</cvs-query>
