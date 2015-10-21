@@ -67,6 +67,8 @@
         var params = {
             conditions: {
                 createTime: {$gt: util.getDateStartTime(date), $lt: util.getDateEndTime(date)}
+                ,csId: {$ne: null}
+                ,initiator: {$ne: null}
             }
         };
         var loadCvs = domain.action('loadCvs');
