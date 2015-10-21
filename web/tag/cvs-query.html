@@ -12,7 +12,7 @@
                 </div><!--/.well -->
             </div><!--/span-->
             <div class="col-md-9 col-xs-9 col-sm-9">
-                <div class="jumbotron" style="height: 38em;padding-top: 0em; padding-left: 2em;padding-right: 4em;">
+                <div class="jumbotron" style="height: auto;padding-top: 0em; padding-left: 2em;padding-right: 4em;">
                     <br>
                     <div>
                         <ul>
@@ -27,8 +27,8 @@
                             </li >
 
                             <li class="numberlist">
-                                <div class="panel " style="height: 30em">
-                                    <ul class="numberlist">
+                                <div class="panel " style="min-height: 30em">
+                                    <ul class="numberlist" style="margin-bottom: 5em">
 
                                         <li>
                                             <strong class="col-md-2"> 客户</strong>
@@ -67,8 +67,6 @@
         var params = {
             conditions: {
                 createTime: {$gt: util.getDateStartTime(date), $lt: util.getDateEndTime(date)}
-                ,csId: {$ne: null}
-                ,initiator: {$ne: null}
             }
         };
         var loadCvs = domain.action('loadCvs');

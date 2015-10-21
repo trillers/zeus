@@ -30,9 +30,18 @@ module.exports = function(router){
     });
 
     router.post('/find', function*(){
-        var params = {}
+        var params = {};
         if(this.request.body.filter) {
             params = this.request.body.filter;
+        }
+        if(params.conditions){
+            params.conditions.csId = {$ne: null};
+            params.conditions.initiator = {$ne: null};
+        }else {
+            params.conditions = {
+                csId: {$ne: null},
+                initiator: {$ne: null}
+            }
         }
         params.populate = [
             {

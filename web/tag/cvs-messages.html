@@ -12,10 +12,10 @@
                     </div><!--/.well -->
                 </div><!--/span-->
                 <div class="col-md-9 col-xs-9 col-sm-9">
-                    <div class="jumbotron" style="height: 38em">
-                        <div class="col-md-12" >
-                            <div class="panel panel-default" style="height: 32em">
-                                <div style="height: 29em;">
+                    <div class="jumbotron" style="height: auto; overflow: hidden">
+                        <div class="col-md-12" style="height: auto">
+                            <div class="panel panel-default" style="min-height: 32em">
+                                <div style="min-height: 29em; margin-bottom: 3em">
                                     <ul style="list-style-type: none">
                                         <li each='{item, i in items}' class={ floatRight: i%2==1} style="width: 100%">
                                             <div>
@@ -29,8 +29,8 @@
 
                                     </ul>
                                 </div>
-                                <hr style="margin-top: 0em ; margin-bottom: 0em ">
-                                <a style="float: left ; margin-left: 1em ;font-size: 1.5em" onclick="{returnPage}">返回</a>
+                                <hr style="margin-bottom: 0em ">
+                                <a style="float: left ; margin-left: 1em ;font-size: 1.5em; margin-bottom: 0em" onclick="{returnPage}">返回</a>
                             </div>
                         </div>
                     </div>
