@@ -64,6 +64,7 @@
         var self = nest.presentable(this);
         self.env = (__app.settings.env.NODE_ENV=="production")?"public":"web";
         var date = new Date();
+        self.loaded = false;
         var params = {
             conditions: {
                 createTime: {$gt: util.getDateStartTime(date), $lt: util.getDateEndTime(date)}
@@ -90,7 +91,10 @@
             console.info('tag cvs query is opening');
             self.trigger('ready', false);
             self.trigger('view-route-to');
-            loadCvs.execute(params);
+            if(!self.loaded){
+                self.loaded = true;
+                loadCvs.execute(params);
+            }
         });
 
         this.on('leave', function(){
