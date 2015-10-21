@@ -7,6 +7,8 @@
         <span class="col-md-2">5s</span>
         <a class="col-md-2" onclick="{showMessages}">查看</a>
     </li>
+    <br>
+    <br>
     <script>
         var self = this;
         var item = self.opts.curritem;
@@ -16,6 +18,7 @@
         self.date = createTime.toLocaleDateString().replace(/\//g, '-');
         self.time = createTime.getHours() + ':' + createTime.getMinutes();
         showMessages(e){
+            e.preventUpdate = true;
             riot.route('cvs/_' + item._id);
         }
     </script>

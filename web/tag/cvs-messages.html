@@ -86,6 +86,7 @@
             });
 
             returnPage(e){
+                e.preventUpdate = true;
                 riot.route('cvs/query');
             }
         </script>
