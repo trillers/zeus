@@ -22,6 +22,7 @@ app.use(views(path.join(__dirname, '../views'), { map: { html: 'swig' }}));
 app.use(koaBody({multipart:true, formidable:{keepExtensions: true, uploadDir: path.join(__dirname, '../../public')}}));
 
 app.use(logging.generatorFunc);
+
 //router
 require('../routes')(app);
 
