@@ -41,7 +41,7 @@ app.routeView('cvs/_:id', nest.viewable({
   },
   route: function(ctx){
     this.context = ctx;
-    this.tag.trigger('open', {id: ctx.req.params.id, share: ctx.req.query.share, guest: ctx.req.query.guest});
+    this.tag.trigger('open', {_id: ctx.req.params.id, share: ctx.req.query.share, guest: ctx.req.query.guest});
   }
 }));
 
