@@ -1,7 +1,7 @@
 var msgService = require('../../modules/message/services/MessageService');
 
 module.exports = function(router) {
-    router.get('/_cvsId', function*(){
+    router.get('/_:cvsId', function*(){
         var cvsId = this.params.cvsId;
         var params = {
             conditions:{

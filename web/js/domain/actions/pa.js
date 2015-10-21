@@ -10,7 +10,7 @@ domain.action('loadCvs').onExecute(function(filter){
 });
 
 domain.action('loadMsgOfCvs').onExecute(function(cvsId){
-    apiFactory.get('/cvs/_' + cvsId).drive(this).send();
+    apiFactory.get('/msg/_' + cvsId).drive(this).send();
 });
 
 domain.action('getCsSnapshot').onExecute(function(filter){

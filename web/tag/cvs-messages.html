@@ -1,4 +1,4 @@
-<cvs-detail>
+<cvs-messages>
     <div if="{!hidden}">
         <top-menu></top-menu>
         <div class="container">
@@ -16,12 +16,17 @@
                         <div class="col-md-12" >
                             <div class="panel panel-default" style="height: 32em">
                                 <div style="height: 29em;">
-                                    <ul>
-                                        <li each='{items}' style="float: left; width: 100%">
-                                            <br>
-                                            <small>{'('+ new Date(crtOn).getHours() + ':' + new Date(crtOn).getMinutes()}</small>
-                                            <strong>{}：</strong>
-                                            <br> &nbsp;&nbsp;&nbsp;&nbsp;{content || recognition} </li>
+                                    <ul style="list-style-type: none">
+                                        <li each='{item, i in items}' class={ floatRight: i%2==1} style="width: 100%">
+                                            <div>
+                                                <small>{'('+ new Date(item.crtOn).getHours() + ':' + new Date(item.crtOn).getMinutes() + ')'}</small>
+                                                <strong>{item.from.wx_nickname}：</strong>
+                                                <br> &nbsp;&nbsp;&nbsp;&nbsp;{item.content || item.recognition}
+                                                <br>
+                                            </div>
+
+                                        </li>
+
                                     </ul>
                                 </div>
                                 <hr style="margin-top: 0em ; margin-bottom: 0em ">
@@ -37,6 +42,7 @@
 
         <style type="text/css">
             .leftlist{list-style-type: none;text-align: center;font-size: 1.3em}
+            .floatRight{text-align: right}
         </style>
         <script>
             this.app = this.opts.app; //keep spa object
@@ -46,7 +52,7 @@
             var loadMsgOfCvs = domain.action('loadMsgOfCvs');
 
             var onLoadMsgOfCvs = function(data){
-                self.item = data;
+                self.items = data;
                 self.update();
             }
             this.on('mount', function(){
@@ -61,6 +67,7 @@
                 console.info('tag cvs messages is opening');
                 self.trigger('ready', true);
                 self.trigger('view-route-to');
+                loadMsgOfCvs.execute(self.cvsId);
             });
 
             this.on('leave', function(){
@@ -83,4 +90,4 @@
             }
         </script>
     </div>
-</cvs-detail>
+</cvs-messages>
