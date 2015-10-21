@@ -10,8 +10,8 @@
     <script>
         var self = this;
         var item = self.opts.curritem;
-        self.customer = item.initiator.wx_nickname;
-        self.cs = item.csId.wx_nickname;
+        self.customer = item.initiator ? item.initiator.wx_nickname : '空';
+        self.cs = item.csId ? item.csId.wx_nickname : '空';
         var createTime = new Date(item.createTime);
         self.date = createTime.toLocaleDateString().replace(/\//g, '-');
         self.time = createTime.getHours() + ':' + createTime.getMinutes();
