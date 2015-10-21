@@ -26,11 +26,16 @@
                 })
             });
         })
+        //回车时，默认是登陆
+        function on_return(){
+            if(window.event.keyCode == 13){
+                $('#login').trigger('click');
+            }
+        }
     </script>
 </head>
 <body background="../../images/bg2.jpg" style="background-repeat: no-repeat;
-        background-attachment: fixed; background-size: cover;background-position: center bottom;"
-        >
+        background-attachment: fixed; background-size: cover;background-position: center bottom;" onkeydown="on_return();">
 <div class="container" style="text-align: center ; margin-top: 15%">
     <div class="panel col-md-4 col-md-offset-4"  style=" height: 13em ; border-color: silver"; >
 

@@ -12,28 +12,27 @@
                     </div><!--/.well -->
                 </div><!--/span-->
                 <div class="col-md-9 col-xs-9 col-sm-9">
-                    <div class="jumbotron" style="height: auto; overflow: hidden">
-                        <div class="col-md-12" style="height: auto">
-                            <div class="panel panel-default" style="min-height: 32em">
-                                <div style="min-height: 29em; margin-bottom: 3em">
-                                    <ul style="list-style-type: none">
-                                        <li each='{item, i in items}' class={ floatRight: i%2==1} style="width: 100%">
-                                            <div>
-                                                <small>{'('+ new Date(item.crtOn).getHours() + ':' + new Date(item.crtOn).getMinutes() + ')'}</small>
-                                                <strong>{item.from.wx_nickname}：</strong>
-                                                <br> &nbsp;&nbsp;&nbsp;&nbsp;{item.content || item.recognition}
-                                                <br>
-                                            </div>
+                    <div class="jumbotron" style="min-height: 38em; overflow: hidden; padding-bottom: 0em">
+                            <div class="panel panel-default container-fluid" style="min-height: 29em; padding-left: 0em">
+                                <div id="dialog" style="min-height: 29em; margin-bottom: 0em">
+                                        <ul style="list-style-type: none">
+                                            <li each='{item, i in items}' class={ floatRight: i%2==1} style="width: 100%">
+                                                <div>
+                                                    <small>{'('+ new Date(item.crtOn).getHours() + ':' + new Date(item.crtOn).getMinutes() + ')'}</small>
+                                                    <strong>{item.from.wx_nickname}：</strong>
+                                                    <br> &nbsp;&nbsp;&nbsp;&nbsp;{item.content || item.recognition}
+                                                    <br>
+                                                </div>
 
-                                        </li>
+                                            </li>
 
-                                    </ul>
+                                        </ul>
                                 </div>
-                                <hr style="margin-bottom: 0em ">
-                                <a style="float: left ; margin-left: 1em ;font-size: 1.5em; margin-bottom: 0em; cursor: pointer" onclick="{returnPage}">返回</a>
+
+                                <hr width="110%" style="margin-bottom: 0em ">
+                                <a style="float: right ; margin-left: 1em ;font-size: 1.5em; margin-bottom: 0em; cursor: pointer" onclick="{returnPage}">返回</a>
                             </div>
                         </div>
-                    </div>
                 </div><!--/span-->;
             </div><!--/row-->
 
