@@ -97,6 +97,7 @@ app.on('init', function(){
   var attentionUrl = util.getCookie('attentionUrl');
   var hash = attentionUrl || window.location.hash;
   hash || (hash = app.defaultHash);
+  riot.mount('top-menu');
   riot.route(hash);
   if(attentionUrl){
     util.setCookie('attentionUrl', "", -1);
