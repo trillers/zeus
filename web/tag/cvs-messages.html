@@ -16,11 +16,14 @@
                             <div class="panel panel-default container-fluid" style="min-height: 29em; padding-left: 0em">
                                 <div id="dialog" style="min-height: 29em; margin-bottom: 0em">
                                         <ul style="list-style-type: none">
-                                            <li each='{item, i in items}' class={ floatRight: i%2==1} style="width: 100%">
-                                                <div>
-                                                    <small>{'('+ new Date(item.crtOn).getHours() + ':' + new Date(item.crtOn).getMinutes() + ')'}</small>
-                                                    <strong>{item.from.wx_nickname}：</strong>
-                                                    <br> &nbsp;&nbsp;&nbsp;&nbsp;{item.content || item.recognition}
+                                            <li each='{item, i in items}'  class={ right: parent.from != item.from._id}  style="width: 50%; overflow: hidden">
+                                                <div class={ floatRight: parent.from != item.from._id}>
+                                                    <div class={ textRight: parent.from != item.from._id}>
+                                                        <small>{'('+ new Date(item.crtOn).getHours() + ':' + new Date(item.crtOn).getMinutes() + ')'}</small>
+                                                        <strong>{item.from.wx_nickname}：</strong>
+                                                    </div>
+                                                    <span>&nbsp;&nbsp;&nbsp;&nbsp;{item.content || item.recognition}</span>
+                                                    <br>
                                                     <br>
                                                 </div>
 
@@ -41,7 +44,9 @@
 
         <style type="text/css">
             .leftlist{list-style-type: none;text-align: center;font-size: 1.3em}
-            .floatRight{text-align: right}
+            .right{margin-left: 50%; padding-right: 1.2em}
+            .textRight{text-align: right}
+            .floatRight{float: right}
         </style>
         <script>
             this.app = this.opts.app; //keep spa object
@@ -51,6 +56,7 @@
 
             var onLoadMsgOfCvs = function(data){
                 self.items = data;
+                self.from = data[0].from && data[0].from._id;
                 self.update();
             }
             this.on('mount', function(){
