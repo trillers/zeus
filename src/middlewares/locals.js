@@ -11,6 +11,7 @@ var debug = env != 'production';
 var __app = {
     settings: {
         api: settings.api,
+        athenaApi: settings.athenaApi,
         app: settings.app,
         env: settings.env
     },

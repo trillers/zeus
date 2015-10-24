@@ -21,7 +21,15 @@
                                                         <small>{'('+ new Date(item.crtOn).getHours() + ':' + new Date(item.crtOn).getMinutes() + ')'}</small>
                                                         <strong>{item.from.wx_nickname}：</strong>
                                                     </div>
-                                                    <span>&nbsp;&nbsp;&nbsp;&nbsp;{item.content || item.recognition}</span>
+                                                    <div if= "{item.contentType == 'text'}">
+                                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;{item.content || item.recognition}</span>
+                                                    </div>
+                                                    <div if= "{item.contentType == 'image'}">
+                                                        <img style="height: 7em" src="{parent.api + '/file/?media_id=' + item.an_media_id}" alt=""/>
+                                                    </div>
+                                                    <div if= "{item.contentType == 'voice'}">
+                                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;这是一条语音消息</span>
+                                                    </div>
                                                     <br>
                                                     <br>
                                                 </div>
@@ -52,6 +60,7 @@
             var self = nest.presentable(this);
             self.env = (__app.settings.env.NODE_ENV=="production")?"public":"web";
             var loadMsgOfCvs = domain.action('loadMsgOfCvs');
+            self.api =  __app.settings.athenaApi.url;
 
             var onLoadMsgOfCvs = function(data){
                 self.items = data;
