@@ -22,13 +22,13 @@
                                                         <strong>{item.from.wx_nickname}：</strong>
                                                     </div>
                                                     <div if= "{item.contentType == 'text'}">
-                                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;{item.content || item.recognition}</span>
+                                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;{item.content}</span>
                                                     </div>
                                                     <div if= "{item.contentType == 'image'}">
                                                         <img style="height: 7em" src="{parent.api + '/file/?media_id=' + item.an_media_id}" alt=""/>
                                                     </div>
                                                     <div if= "{item.contentType == 'voice'}">
-                                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;这是一条语音消息</span>
+                                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;[语音]{item.recognition}</span>
                                                     </div>
                                                     <br>
                                                     <br>

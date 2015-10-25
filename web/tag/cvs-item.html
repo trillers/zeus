@@ -1,17 +1,15 @@
 <cvs-item>
     <li>
-        <span class="col-md-2 formItem">{customer}</span>
-        <span class="col-md-2 formItem">{cs}</span>
-        <span class="col-md-2 formItem">{date}</span>
-        <span class="col-md-2 formItem">{time}</span>
-        <!--<span class="col-md-2">5s</span>-->
-        <a class="col-md-2 formItem" onclick="{showMessages}" style="cursor: pointer">查看</a>
+        <span class="col-md-2">{customer}</span>
+        <span class="col-md-2">{cs}</span>
+        <span class="col-md-2">{date}</span>
+        <span class="col-md-2">{time}</span>
+        <span class="col-md-2">{resTime}</span>
+        <a class="col-md-2" onclick="{showMessages}" style="cursor: pointer">查看</a>
     </li>
     <br>
     <br>
-    <style>
-        .formItem{width: 20%}
-    </style>
+
     <script>
         var self = this;
         var item = self.opts.curritem;
@@ -23,6 +21,12 @@
         var day = createTime.getDate();
         self.date =  year + '-' + month + '-' + day;
         self.time = createTime.getHours() + ':' + createTime.getMinutes();
+        self.resTime = '--';
+        if(item.takenTime){
+            var takenTime = new Date(item.takenTime);
+            self.resTime = ((takenTime.getMinutes() - createTime.getMinutes())*60 + takenTime.getSeconds() - createTime.getSeconds()) + 's';
+        }
+
         showMessages(e){
             e.preventUpdate = true;
             riot.route('cvs/_' + item._id);

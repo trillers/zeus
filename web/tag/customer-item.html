@@ -1,18 +1,28 @@
 <customer-item>
     <li style="width: 100%">
-        <span class="col-md-1"> </span>
-        <span class="col-md-2"> <img src="{headUrl}"  style="max-width: 2em"></span>
-        <span class="col-md-2"> {nickname}</span>
-        <span class="col-md-2"> 空</span>
-        <span class="col-md-2"> 空</span>
-        <span class="col-md-2"> 未验证 </span>
+        <span class="col-md-2 formItem"> <img src="{headUrl}"  style="max-width: 2em"></span>
+        <span class="col-md-2 formItem"> {nickname}</span>
+        <span class="col-md-2 formItem"> 空</span>
+        <span class="col-md-2 formItem"> 空</span>
+        <span class="col-md-2 formItem"> 未验证 </span>
+        <span class="col-md-2 formItem"> {date}</span>
+        <span class="col-md-2 formItem"> {timeWindow}</span>
     </li>
     <br>
     <br>
+    <style>
+        .formItem{width: 14%; padding-left: 8px; padding-right: 8px;}
+    </style>
     <script>
         var self = this;
         var item = self.opts.curritem;
         self.headUrl = item.wx_headimgurl;
         self.nickname = item.wx_nickname.length < 6 ? item.wx_nickname : item.wx_nickname.slice(0, 5) + '...';
+        var createTime = new Date(item.crtOn);
+        var year = createTime.getFullYear();
+        var month = createTime.getMonth() + 1;
+        var day = createTime.getDate();
+        self.date =  year + '-' + month + '-' + day;
+        self.timeWindow = item.activeTime == -2 ? 'disabled' : (item.activeTime/3600).toFixed(2) + 'h';
     </script>
 </customer-item>
