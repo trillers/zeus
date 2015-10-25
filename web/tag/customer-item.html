@@ -23,6 +23,7 @@
         var month = createTime.getMonth() + 1;
         var day = createTime.getDate();
         self.date =  year + '-' + month + '-' + day;
+        debugger;
         self.timeWindow = item.activeTime == -2 ? 'disabled' : (item.activeTime/3600).toFixed(2) + 'h';
     </script>
 </customer-item>
