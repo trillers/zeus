@@ -16,13 +16,15 @@
                     <div>
                         <ul>
                             <li class="numberlist">
-                                <p>
-                                    <span style="font-size: 1em">日期：</span> <!-- 默认今天 -->
-                                    <span style="font-size: 0.5em">{date}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a style="font-size: 0.5em; cursor: pointer" onclick="{preDay}">前一天</a>&nbsp;&nbsp;
-                                    <a style="font-size: 0.5em; cursor: pointer" onclick="{nextDay}">后一天</a>&nbsp;&nbsp;
-                                    <a style="font-size: 0.5em; cursor: pointer" onclick="{total}">全部</a>
-                                </p>
+                                <div>
+                                    <label style="font-size: 0.5em; color: #337ab7; cursor: pointer">
+                                        <input id="total" type="checkbox" checked="{totalDone}" onclick="{total}"/>&nbsp;&nbsp;全部&nbsp;&nbsp;</label>
+                                        <a title="上一天" style="text-decoration: none;font-size: 0.5em; cursor: pointer" onclick="{preDay}">《</a>&nbsp;&nbsp;
+                                        <span style="font-size: 0.5em">{date}</span>&nbsp;&nbsp;
+
+                                        <a title="下一天" style="text-decoration: none; font-size: 0.5em; cursor: pointer" onclick="{nextDay}">》</a>&nbsp;&nbsp;
+                                    <div class="mask" style="display: none"></div>
+                                </div>
                             </li >
 
                             <li class="numberlist">
@@ -57,6 +59,12 @@
     <style type="text/css">
         .leftlist{list-style-type: none;text-align: center;font-size: 1.3em}
         .numberlist{list-style-type: none ; text-align: center}
+        .mask{ margin-top: -1.7em;
+            height: 1.7em;
+            width: 15em;
+            margin-left: 21em;
+            background: rgb(238, 238, 238);
+            opacity: 0.7;}
     </style>
     <script>
         this.app = this.opts.app; //keep spa object
@@ -64,6 +72,7 @@
         self.env = (__app.settings.env.NODE_ENV=="production")?"public":"web";
         var date = new Date();
         self.loaded = false;
+        self.totalDone = false;
         var params = {
             conditions: {
                 createTime: {$gt: util.getDateStartTime(date), $lt: util.getDateEndTime(date)}
@@ -132,7 +141,15 @@
             loadCvs.execute(params);
         }
         total(e){
-            loadCvs.execute();
+            self.totalDone = !self.totalDone;
+            if(self.totalDone){
+                $('.mask').show();
+                loadCvs.execute();
+            }else{
+                $('.mask').hide();
+                loadCvs.execute(params);
+            }
+            return true;
         }
     </script>
         </div>

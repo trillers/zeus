@@ -7,6 +7,9 @@ module.exports = function(router) {
             conditions:{
                 channel: cvsId
             },
+            sort:{
+                crtOn: -1
+            },
             populate:[
                 {
                     path: 'from',
