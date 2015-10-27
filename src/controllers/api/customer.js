@@ -4,6 +4,7 @@ var wechatUserService = require('../../modules/user/services/WechatUserService')
 var UserRole = require('../../modules/common/models/TypeRegistry').item('UserRole');
 var csState = require('../../modules/common/models/TypeRegistry').item('CSState');
 var userKvs = require('../../modules/user/kvs/User');
+var botManager = require('../../modules/assistant/botManager');
 var Promise = require('bluebird');
 
 module.exports = function(router) {
@@ -12,6 +13,7 @@ module.exports = function(router) {
             var customerList = yield userService.getRoleListAsync(UserRole.Customer.value());
             for(var i = 0; i < customerList.length; i++){
                 customerList[i].activeTime = yield userKvs.loadSessionTTLByOpenidAsync(customerList[i].wx_openid);
+                customerList[i].from = botManager.getNameMap[customerList[i].bot_id];
             }
             this.body = customerList;
         }catch(err){

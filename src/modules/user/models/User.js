@@ -2,6 +2,7 @@ var mongoose = require('../../../app/mongoose');
 var DomainBuilder = require('../../../framework/model/DomainBuilder');
 var UserState = require('../../../framework/model/enums').UserState;
 var UserRole = require('../../common/models/TypeRegistry').item('UserRole');
+var UserSourceType = require('../../common/models/TypeRegistry').item('UserSourceType');
 
 var _ = require('underscore');
 
@@ -14,7 +15,12 @@ var schema = DomainBuilder
         token: {type: String}
         , stt: {type: String, enum: UserState.values(), required: true}
         , role: {type: String, enum: UserRole.valueList(), default: UserRole.Customer.value()}
-        //, tag: [{type: String, ref: 'Tag'}]
+        , setRoleTime: {type: Date} //设置用户角色时间
+        , sourceType: {type: String, enum: UserSourceType.valueList(), default: UserSourceType.WechatSite.value()}
+        , siteUser: {type: String, ref: 'User'}
+
+        , nickname:       {type: String}
+        , headimgurl:        {type: String}
 
         , wx_openid: {type: String} //weixin openid
         , wx_at: String //weixin access_token
@@ -35,7 +41,13 @@ var schema = DomainBuilder
         , wx_province: {type: String}
         , wx_city: {type: String}
         , wx_privilege: {type: String}
-        , setRoleTime: {type: Date} //设置用户角色时间
+
+        //bot user properties
+        , bot_id: {type: String} //bot id is made like wechat site id + ':' + wechat site openid
+        , bot_uid: {type: String} //bid is make like 'bot' + randomid(idGen.next('WechatBotContact))
+        , bot_nickname: {type: String}
+        , bot_headimgurl: {type: String}
+        , bot_place: {type: String}
     })
     .build();
 
@@ -47,7 +59,6 @@ var helper = {};
 helper.getUserJsonFromModel = function(user) {
     var userJson = user.toObject({virtuals: true});
     userJson.id = user.id;
-    userJson.contact && (delete userJson.contact);
     return userJson;
 };
 
@@ -62,8 +73,8 @@ helper.getUserJsonFromWechatApi = function(userInfo, oauth){
         /*
          * shared properties from wechat or other platforms
          */
-        displayName:       userInfo.nickname,
-        headImgUrl:        userInfo.headimgurl,
+        nickname:       userInfo.nickname,
+        headimgurl:        userInfo.headimgurl,
 
         /*
          * wechat oauth info
@@ -115,8 +126,8 @@ var replace_fields = {
 };
 
 var alias_fields = {
-    'nickname': 'displayName',
-    'headimgurl': 'headImgUrl'
+    'nickname': 'nickname',
+    'headimgurl': 'headimgurl'
 };
 
 /**
