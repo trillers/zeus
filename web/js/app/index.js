@@ -93,6 +93,17 @@ app.routeView('customer/query', nest.viewable({
   }
 }));
 
+app.routeView('assistant/query', nest.viewable({
+  name: 'assistant/query',
+  mount: function(ctx){
+    var tags = riot.mount('assistant-query', {filter: ctx.req.query, app: this.parent});
+    this.tag = tags[0];
+  },
+  route: function(ctx){
+    this.context = ctx;
+    this.tag.trigger('open', ctx.req.query);
+  }
+}));
 app.on('init', function(){
   var attentionUrl = util.getCookie('attentionUrl');
   var hash = attentionUrl || window.location.hash;

@@ -1,6 +1,7 @@
 var logger = require('../../../app/logging').logger;
 var cbUtil = require('../../../framework/callback');
 var WechatBot = require('../models/WechatBot').model;
+var Promise = require('bluebird');
 
 var Service = {};
 
@@ -89,4 +90,5 @@ Service.remove = function(botInfo, callback){
         });
 };
 
+Service = Promise.promisifyAll(Service);
 module.exports = Service;

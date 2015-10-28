@@ -1,4 +1,4 @@
-<customer-query>
+<assistant-query>
     <div if="{!hidden}">
         <div class="container">
             <div class="row-fluid">
@@ -6,8 +6,8 @@
                     <div class="well sidebar-nav" style="height: 38em">
                         <ul class="nav nav-list" style="margin-top: 1em">
                             <li class="leftlist"><a href="#customer/index">客户总览</a></li>
-                            <li class="leftlist" style="background: #e7e7e7"><a href="#customer/query">信息查询</a></li>
-                            <li class="leftlist"><a href="#assistant/query">助手号</a></li>
+                            <li class="leftlist"><a href="#customer/query">信息查询</a></li>
+                            <li class="leftlist" style="background: #e7e7e7"><a href="#assistant/query">助手号</a></li>
 
                         </ul>
                     </div><!--/.well -->
@@ -24,17 +24,19 @@
                                         <ul class="numberlist" style="padding-left: 0em; margin-bottom: 5em">
 
                                             <li>
-                                                <strong class="col-md-2 formItem">用户</strong>
-                                                <strong class="col-md-2 formItem">类型</strong>
-                                                <strong class="col-md-2 formItem">来源</strong>
-                                                <strong class="col-md-2 formItem">创建时间</strong>
-                                                <strong class="col-md-2 formItem"> 会话窗口</strong>
+                                                <strong class="col-md-1"></strong>
+                                                <strong class="col-md-2">微信昵称</strong>
+                                                <strong class="col-md-2">注册时间</strong>
+                                                <strong class="col-md-2">状态</strong>
+                                                <strong class="col-md-2">备注</strong>
+                                                <strong class="col-md-2">操作</strong>
+                                                <strong class="col-md-1"></strong>
                                             </li>
 
 
                                             <li>  <hr width="100%" >  </li>
 
-                                            <customer-item each="{items}" curritem="{this}" />
+                                            <assistant-item each="{items}" curritem="{this}" />
                                         </ul>
 
                                     </div><!-- panel-->
@@ -51,15 +53,14 @@
         <style type="text/css">
             .leftlist{list-style-type: none;text-align: center;font-size: 1.3em}
             .numberlist{list-style-type: none ; text-align: center}
-            .formItem{width: 20%; padding-left: 8px; padding-right: 8px;}
         </style>
         <script>
             this.app = this.opts.app; //keep spa object
             var self = nest.presentable(this);
             self.env = (__app.settings.env.NODE_ENV=="production")?"public":"web";
-            var loadCustomer = domain.action('loadCustomer');
+            var loadAssistant = domain.action('loadAssistant');
 
-            var onLoadCustomer = function(data){
+            var onLoadAssistant = function(data){
                 if(data){
                     self.items = data;
                     self.update();
@@ -67,18 +68,18 @@
             }
 
             this.on('mount', function(){
-                console.info('tag customer query is mounted');
-                loadCustomer.onDone(onLoadCustomer);
+                console.info('tag assistant query is mounted');
+                loadAssistant.onDone(onLoadAssistant);
             });
             this.on('unmount', function(){
-                console.info('tag customer query is unmounted');
-                loadCustomer.offDone(onLoadCustomer);
+                console.info('tag assistant query is unmounted');
+                loadAssistant.offDone(onLoadAssistant);
             });
             this.on('open', function(options){
-                console.info('tag customer query is opening');
+                console.info('tag assistant query is opening');
                 self.trigger('ready', false);
                 self.trigger('view-route-to');
-                loadCustomer.execute();
+                loadAssistant.execute();
             });
 
             this.on('leave', function(){
@@ -92,9 +93,9 @@
             });
 
             this.on('refresh', function(){
-                console.info('tag customer query is refreshing');
+                console.info('tag assistant query is refreshing');
                 //_refresh();
             });
         </script>
     </div>
-</customer-query>
+</assistant-query>

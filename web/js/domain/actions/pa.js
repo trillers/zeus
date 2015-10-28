@@ -32,4 +32,8 @@ domain.action('getCustomerSnapshot').onExecute(function(){
 domain.action('loadCustomer').onExecute(function(){
     apiFactory.get('/customer/find').drive(this).send();
 });
+
+domain.action('loadAssistant').onExecute(function(){
+    apiFactory.get('/assistant/load').drive(this).send();
+});
 module.exports = null;

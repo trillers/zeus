@@ -30,4 +30,10 @@ module.exports = function(app){
     customer_router.prefix('/api/customer');
     require('./customer')(customer_router);
     app.use(customer_router.routes());
+
+    //assistant module
+    var assistant_router = new router();
+    assistant_router.prefix('/api/assistant');
+    require('./assistant')(assistant_router);
+    app.use(assistant_router.routes());
 }
