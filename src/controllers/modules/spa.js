@@ -6,8 +6,9 @@ module.exports = function(router){
     router.get('/', function *(){
         if(!this.session.user){
             this.redirect('/login');
+        }else{
+            yield this.render('index');
         }
-        yield this.render('index');
     });
     router.get('/login', function *(){
         yield this.render('login');
